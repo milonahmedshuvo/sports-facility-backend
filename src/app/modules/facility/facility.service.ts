@@ -9,7 +9,16 @@ const createFaciltyIntoDB = async (payload:TFacility) => {
 
 
 
+const updateFacilityIntoDB = async (id:string, payload:Partial<TFacility>) => {
+    const {...remainingsData} = payload
+
+    const result = await Facility.findByIdAndUpdate(id, remainingsData, {new: true})
+    return result
+}
+
+
 
 export const facilityService = {
-    createFaciltyIntoDB
+    createFaciltyIntoDB,
+    updateFacilityIntoDB
 }

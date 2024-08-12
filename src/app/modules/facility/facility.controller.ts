@@ -19,6 +19,29 @@ const createFacilty = async (req:Request, res:Response, next:NextFunction) => {
 
 
 
+
+
+const updateFacilty = async (req:Request, res:Response, next:NextFunction) => {
+
+    try{
+        const {id} = req.params
+        const result = await facilityService.updateFacilityIntoDB(id, req.body)
+
+
+
+    res.status(200).json({
+        success: true,
+        message: 'Facility updated successfully',
+        data: result
+    })
+
+    }catch(err){
+        next(err)
+    }
+}
+
+
 export const facilityController = {
-    createFacilty
+    createFacilty,
+    updateFacilty
 }
