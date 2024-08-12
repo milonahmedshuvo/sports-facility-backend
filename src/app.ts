@@ -4,6 +4,10 @@ import { userRoutes } from './app/modules/user/user.routes'
 import config from './app/config'
 import { TErrorSoursePattern } from './app/error/error.interface'
 import handleMongooseError from './app/error/handleMongoose.Error'
+import { ZodError } from 'zod'
+import handleZodError from './app/error/handleZodError'
+import { authRoutes } from './app/modules/auth/auth.routes'
+import AppError from './app/error/apperror'
 const app = express()
 
 
@@ -15,6 +19,7 @@ app.use(cors())
 
 // application routes 
 app.use('/api/v1/user', userRoutes)
+app.use('/api/v1/user-login', authRoutes)
 
 
 
@@ -38,6 +43,20 @@ app.use((err:any, req:Request, res:Response, next:NextFunction ) => {
     statusCode = simplefiedError.statusCode
     message = simplefiedError.message
     errorSoursePattern = simplefiedError.errorSource
+  }else if(err instanceof ZodError){
+    const simplefiedZodError = handleZodError(err)
+    statusCode = simplefiedZodError.statusCode
+    message = simplefiedZodError.message
+    errorSoursePattern = simplefiedZodError.errorSourse
+  }else if(err instanceof AppError){
+    statusCode = err.statusCode
+    message = err.message
+    errorSoursePattern = [
+      {
+        path: '',
+        message: err.message
+      }
+    ]
   }
 
 

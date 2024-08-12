@@ -1,7 +1,9 @@
 import { model, Schema } from "mongoose";
 import { TUser } from "./user.interface";
+import bcrypt from 'bcrypt'
 
-const studentSchema = new Schema<TUser> ({
+
+const userSchema = new Schema<TUser> ({
     name: {
         type: String,
         required: true,
@@ -9,7 +11,8 @@ const studentSchema = new Schema<TUser> ({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -31,9 +34,20 @@ const studentSchema = new Schema<TUser> ({
 })
 
 
+// use pre hook and middleware before save document in the database
+userSchema.pre('save', async function (next) {
+    console.log(this.password)
+
+    this.password = await bcrypt.hash(this.password, 16)
+    next()
+})
+
+
 
 
 
 // creating model 
-export const User = model<TUser>('User', studentSchema)
+export const User = model<TUser>('User', userSchema)
+
+
 
