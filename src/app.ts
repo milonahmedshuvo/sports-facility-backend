@@ -8,6 +8,7 @@ import { ZodError } from 'zod'
 import handleZodError from './app/error/handleZodError'
 import { authRoutes } from './app/modules/auth/auth.routes'
 import AppError from './app/error/apperror'
+import { facilityRoutes } from './app/modules/facility/facility.routes'
 const app = express()
 
 
@@ -20,6 +21,7 @@ app.use(cors())
 // application routes 
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/user-login', authRoutes)
+app.use('/api/v1/facility', facilityRoutes)
 
 
 
