@@ -14,5 +14,9 @@ router.post('/create', validationRequist(facilityValidationSchema.createFacility
 
 router.put('/update/:id', validationRequist(facilityValidationSchema.updateFacilityValidationSchema), auth(user_role.admin), facilityController.updateFacilty )
 
+router.delete('/delete/:id', auth(user_role.admin), facilityController.deleteFacilty )
+router.get('/all', facilityController.getAllFacilty )
+
+
 
 export const facilityRoutes = router

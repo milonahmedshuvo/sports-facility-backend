@@ -41,7 +41,51 @@ const updateFacilty = async (req:Request, res:Response, next:NextFunction) => {
 }
 
 
+
+
+const deleteFacilty = async (req:Request, res:Response, next:NextFunction) => {
+
+    try{
+        const {id} = req.params
+        const result = await facilityService.deleteFacilityIntoDB(id)
+
+
+
+    res.status(200).json({
+        success: true,
+        message: 'Facility deleted successfully',
+        data: result
+    })
+
+    }catch(err){
+        next(err)
+    }
+}
+
+
+
+const getAllFacilty = async (req:Request, res:Response, next:NextFunction) => {
+
+    try{
+
+        const result = await facilityService.getAllFacilityFromDB()
+
+    res.status(200).json({
+        success: true,
+        message: 'Facilities retrieved successfully',
+        data: result
+    })
+
+    }catch(err){
+        next(err)
+    }
+}
+
+
+
 export const facilityController = {
     createFacilty,
-    updateFacilty
+    updateFacilty,
+    deleteFacilty,
+    getAllFacilty
 }
