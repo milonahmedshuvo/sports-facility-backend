@@ -9,6 +9,7 @@ import handleZodError from './app/error/handleZodError'
 import { authRoutes } from './app/modules/auth/auth.routes'
 import AppError from './app/error/apperror'
 import { facilityRoutes } from './app/modules/facility/facility.routes'
+import { bookingRoutes } from './app/modules/booking/booking.routes'
 const app = express()
 
 
@@ -22,6 +23,7 @@ app.use(cors())
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/user-login', authRoutes)
 app.use('/api/v1/facility', facilityRoutes)
+app.use('/api/v1/booking', bookingRoutes)
 
 
 

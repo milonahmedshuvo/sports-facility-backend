@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express"
 import catchAsync from "../utils/catchAsync"
 import AppError from "../error/apperror"
 import { TUserRole } from "../modules/facility/facility.interface"
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt, { JwtHeader, JwtPayload } from 'jsonwebtoken'
 import config from "../config"
 
 
@@ -34,13 +34,13 @@ const auth = (...requistUserRole:TUserRole[]) => {
 
        if(requistUserRole && !requistUserRole.includes(role)) {
            
-           throw new AppError(400, 'you are not authoried,it mush be access Admin Only!!')
+           throw new AppError(401, 'You have no access to this route')
        }
 
        
 
 
-    //    req.user = decoded as JwtHeader
+       req.user = decoded as JwtHeader
        next()
 
           
