@@ -16,17 +16,17 @@
 * Post: /api/v1/user-login/login
 
 ### Facility Api
-* post: /api/v1/facility/create
-* update: /api/v1/facility/update/:id
-* delete: /api/v1/facility/delete/:id
+* post: /api/v1/facility/create  (Admin Only)
+* update: /api/v1/facility/update/:id  (Admin Only)
+* delete: /api/v1/facility/delete/:id  (Admin Only)
 * get : /api/v1/facility/all
 
 ### Booking Api
-* post: /api/v1/booking/create
-* get: /api/v1/booking/all
+* post: /api/v1/booking/create (User Only)
+* get: /api/v1/booking/all (Admin Only)
 * get: /api/v1/booking/check-availability?date=2023-06-15
-* get: /api/v1/booking/user
-* delete: /api/v1/booking/delete/:id
+* get: /api/v1/booking/user (User Only)
+* delete: /api/v1/booking/delete/:id (User Only)
 
 
 
