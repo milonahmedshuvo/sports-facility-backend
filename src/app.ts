@@ -43,7 +43,7 @@ app.use((err:any, req:Request, res:Response, next:NextFunction ) => {
 
 
   if(err.name === 'ValidationError'){
-    let simplefiedError = handleMongooseError(err)
+    const simplefiedError = handleMongooseError(err)
     statusCode = simplefiedError.statusCode
     message = simplefiedError.message
     errorSoursePattern = simplefiedError.errorSource
@@ -69,11 +69,14 @@ app.use((err:any, req:Request, res:Response, next:NextFunction ) => {
   res.status(statusCode).json({
     success: 'false it golobar error',
     message: message,
-    name: err.name,
     errorSoursePattern,
-    error: err,
     stack: config.node_env === 'development' ? err.stack : null
   })
+})
+
+
+app.get('/', (req, res) => {
+  res.send('Sports Facility server is runing....')
 })
 
 
@@ -93,9 +96,7 @@ app.use((req:Request, res:Response, next:NextFunction) => {
 
 
 
-app.get('/', (req, res) => {
-  res.send('Sports Facility server is runing....')
-})
+
 
 
 export default app

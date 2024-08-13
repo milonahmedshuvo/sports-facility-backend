@@ -10,7 +10,7 @@ const handleMongooseError = (err:mongoose.Error.ValidationError) => {
         }
     })
 
-    let statusCode = 400
+    const statusCode = 400
 
 
     

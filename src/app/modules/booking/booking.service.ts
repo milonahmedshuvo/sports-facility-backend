@@ -1,6 +1,4 @@
-import { number } from "zod";
 import AppError from "../../error/apperror";
-import { TFacility } from "../facility/facility.interface";
 import { Facility } from "../facility/facility.model";
 import { TBooking } from "./booking.interface";
 import { Booking } from "./booking.model";
@@ -18,7 +16,7 @@ const createBookingIntoDB = async (payload:TBooking) => {
 
      // Access the pricePerHour property 
      const pricePerHour = facility.pricePerHour 
-     console.log({pricePerHour})
+   
 
     // Parse the start time and end time strings
     const [startHour, startMinute] =payload.startTime.split(':').map(Number);

@@ -11,7 +11,7 @@ const handleZodError = (err:ZodError) => {
         }
     })
 
-    let statusCode = 400
+    const statusCode = 400
 
     return {
         statusCode,

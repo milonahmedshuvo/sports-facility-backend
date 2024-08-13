@@ -12,20 +12,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const config_1 = __importDefault(require("./app/config"));
-const app_1 = __importDefault(require("./app"));
-function main() {
+exports.User = void 0;
+const mongoose_1 = require("mongoose");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const userSchema = new mongoose_1.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        required: [true, 'you must be role required']
+    },
+    address: {
+        type: String,
+        required: true
+    }
+});
+// use pre hook and middleware before save document in the database
+userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield mongoose_1.default.connect(config_1.default.database_url);
-            app_1.default.listen(config_1.default.port, () => {
-                console.log(`Sports Facility Server listening on port ${config_1.default.port}`);
-            });
-        }
-        catch (err) {
-            console.log('insite server error', err);
-        }
+        this.password = yield bcrypt_1.default.hash(this.password, 16);
+        next();
     });
-}
-main().catch(err => console.log(err));
+});
+// creating model 
+exports.User = (0, mongoose_1.model)('User', userSchema);

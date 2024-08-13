@@ -36,7 +36,7 @@ const userSchema = new Schema<TUser> ({
 
 // use pre hook and middleware before save document in the database
 userSchema.pre('save', async function (next) {
-    console.log(this.password)
+    
 
     this.password = await bcrypt.hash(this.password, 16)
     next()

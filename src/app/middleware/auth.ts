@@ -21,8 +21,8 @@ const auth = (...requistUserRole:TUserRole[]) => {
 
 
        const decoded = jwt.verify(token, config.access_token_scret as string,)as JwtPayload
-       console.log("Auth middleware decoded:", decoded)
-       const { email, role, iat } = decoded;
+       
+       const { role } = decoded;
 
     
 
