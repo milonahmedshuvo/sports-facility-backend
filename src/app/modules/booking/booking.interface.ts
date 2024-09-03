@@ -8,4 +8,6 @@ export type TBooking = {
     facility: Types.ObjectId,
     payableAmount: number,
     isBooked: string,
+    email: string,
+    image:string
 }

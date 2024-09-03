@@ -5,10 +5,12 @@ const validationRequist = (validationZodSchema:AnyZodObject) => {
    
     return async (req:Request, res:Response, next:NextFunction) =>{
        
+        
+           console.log('ata zood middle vitor', req.body.data)
         try{
 
             await validationZodSchema.parseAsync({
-                body: req.body,
+                body: req.body.data,
             }) 
 
             next()

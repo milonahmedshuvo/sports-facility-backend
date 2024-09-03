@@ -4,7 +4,7 @@ import { facilityService } from "./facility.service";
 const createFacilty = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
-        const result = await facilityService.createFaciltyIntoDB(req.body)
+        const result = await facilityService.createFaciltyIntoDB(req.body.data)
 
         res.status(200).json({
             success: true,
@@ -23,6 +23,10 @@ const createFacilty = async (req: Request, res: Response, next: NextFunction) =>
 
 const updateFacilty = async (req: Request, res: Response, next: NextFunction) => {
 
+
+
+    console.log( "backend from redux", req.body.data)
+    
     try {
         const { id } = req.params
         const result = await facilityService.updateFacilityIntoDB(id, req.body)
@@ -47,6 +51,7 @@ const deleteFacilty = async (req: Request, res: Response, next: NextFunction) =>
 
     try {
         const { id } = req.params
+        
         const result = await facilityService.deleteFacilityIntoDB(id)
 
 
@@ -95,9 +100,35 @@ const getAllFacilty = async (req: Request, res: Response, next: NextFunction) =>
 
 
 
+
+
+const getSingleFacilty = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+        const {id} = req.params
+        const result = await facilityService.getSingleFacilityFromDB(id)
+
+        
+        res.status(200).json({
+            success: 'true',
+            message: 'Single Facility is successfully',
+            data: result
+        })
+      
+
+
+        
+
+    } catch (err) {
+        next(err)
+    }
+}
+
+
 export const facilityController = {
     createFacilty,
     updateFacilty,
     deleteFacilty,
-    getAllFacilty
+    getAllFacilty,
+    getSingleFacilty
 }

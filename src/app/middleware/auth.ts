@@ -8,7 +8,7 @@ import config from "../config"
 
 const auth = (...requistUserRole:TUserRole[]) => {
 
-
+   
     return catchAsync(async (req:Request, res:Response, next:NextFunction ) => {
 
         const token = req.headers.authorization
@@ -24,21 +24,21 @@ const auth = (...requistUserRole:TUserRole[]) => {
        
        const { role } = decoded;
 
-    
-
+       
+       
        
        // check role such user and admin 
       //  const role = (decoded as JwtPayload).role 
         //   const role = decoded.role 
        
+     
 
        if(requistUserRole && !requistUserRole.includes(role)) {
-           
+          
            throw new AppError(401, 'You have no access to this route')
        }
 
        
-
 
        req.user = decoded as JwtHeader
        next()

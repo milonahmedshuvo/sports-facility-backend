@@ -25,7 +25,7 @@ const BookingSchema = new Schema({
      type: Schema.Types.ObjectId,
      ref: 'User',
      unique: true,
-     required: true,
+    //  required: true,
   },
   facility: {
     type: Schema.Types.ObjectId,
@@ -40,6 +40,14 @@ const BookingSchema = new Schema({
   isBooked: {
     type: String,
     default:'confirmed' 
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
   }
 });
 

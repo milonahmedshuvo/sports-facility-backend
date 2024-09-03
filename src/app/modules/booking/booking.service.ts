@@ -6,14 +6,22 @@ import { JwtPayload } from "jsonwebtoken";
 import { User } from "../user/user.model";
 import { getAvailableTimeSlots } from "../../utils/getAvailableTimeSlots";
 
-const createBookingIntoDB = async (payload:TBooking) => {
-      
+const createBookingIntoDB = async (payload:TBooking, jwtData: JwtPayload) => {
+    
+    
+
      const facility = await Facility.findById(payload.facility)
 
      if(!facility){
         throw new AppError(400, 'Facility not found!!')
      }
 
+
+
+
+
+
+     
      // Access the pricePerHour property 
      const pricePerHour = facility.pricePerHour 
    
@@ -43,9 +51,10 @@ const createBookingIntoDB = async (payload:TBooking) => {
     // set payableAmount 
     payload.payableAmount = pricePerHour * diffHours
     payload.date= todayDate
+    payload.email= jwtData.email
 
 
-
+    
 
      const result = await Booking.create(payload)
      return result
@@ -63,11 +72,21 @@ const getAllBookingFromDB = async () => {
 }
 
 
+const getUserAllBookingFromDB = async (jwtData:JwtPayload) => {
+
+    //   console.log('user all bokking :', jwtData)
+    const result = await Booking.find({email: jwtData.email}).populate('facility')
+    return(result)
+}
+
+
 
 
 const queryCheckAvailabilityFromDB = async (query:Record<string, unknown>) => {
      // Get the year, month, and day format YY/MM/DD
+    //  console.log( 'client date:', query)
      const today = new Date();
+
 
      const year = today.getFullYear();
      const month = String(today.getMonth() + 1).padStart(2, '0'); 
@@ -78,7 +97,8 @@ const queryCheckAvailabilityFromDB = async (query:Record<string, unknown>) => {
 
     const date = query.date || todayDate
     
-
+    // console.log('default date:', date)
+    
 
     const bookings = await Booking.find({date})
     
@@ -134,5 +154,6 @@ export const bookingService = {
     getAllBookingFromDB,
     getAllBookingByUserFromDB,
     deleteBookingFromDB,
-    queryCheckAvailabilityFromDB
+    queryCheckAvailabilityFromDB,
+    getUserAllBookingFromDB
 }

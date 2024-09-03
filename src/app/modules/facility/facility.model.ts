@@ -22,9 +22,20 @@ const facilitySchema = new Schema<TFacility>({
     isDeleted: {
         type: Boolean,
         default: false
+    },
+    image: {
+        type: String,
     }
 })
 
+
+
+
+facilitySchema.pre('find', function (next) {
+    this.find({isDeleted: {$ne: true}})
+
+    next()
+} )
 
 
 // creating model 

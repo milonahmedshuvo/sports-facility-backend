@@ -5,9 +5,10 @@ import { bookingService } from "./booking.service";
 
 
 const createBooking = async (req:Request, res:Response, next:NextFunction) => {
-      
+         
+      // console.log('user', req.user)
       try{
-        const result = await bookingService.createBookingIntoDB(req.body)
+        const result = await bookingService.createBookingIntoDB(req.body.data, req.user)
 
 
         res.status(200).json({
@@ -57,8 +58,41 @@ const getAllBookings = async (req:Request, res:Response, next:NextFunction) => {
 
 
 
+
+
+
+const getUserAllBooking = async (req:Request, res:Response, next:NextFunction) => {
+      
+      
+  try{
+    const result = await bookingService.getUserAllBookingFromDB(req.user)
+
+  
+
+
+    res.status(200).json({
+        success: true,
+        message: 'Bookings retrieved successfully',
+        data: result
+    })
+
+
+  }catch(err){
+    next(err)
+  }
+}
+
+
+
+
+
+
+
+
+
 const queryCheckAvailability = async (req:Request, res:Response, next:NextFunction) => {
- 
+       
+     
      
   try{
     
@@ -78,8 +112,6 @@ const queryCheckAvailability = async (req:Request, res:Response, next:NextFuncti
     next(err)
   }
 }
-
-
 
 
 
@@ -145,5 +177,6 @@ export const bookingController = {
     getAllBookings,
     getAllBookingByUser,
     deleteBooking,
-    queryCheckAvailability
+    queryCheckAvailability,
+    getUserAllBooking
 }

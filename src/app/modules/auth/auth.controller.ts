@@ -4,7 +4,7 @@ import { authService } from "./auth.service";
 const userLogin = async (req:Request, res:Response, next:NextFunction) => {
 
     try{
-        const result = await authService.userLoginFromDB(req.body)
+        const result = await authService.userLoginFromDB(req.body.data)
 
 
     res.status(200).json({

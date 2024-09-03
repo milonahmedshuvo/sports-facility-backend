@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 
 
 const userLoginFromDB = async (payload:TLoginUser) => {
+    
 
     const user = await User.findOne({email: payload.email})
 
@@ -22,6 +23,7 @@ const userLoginFromDB = async (payload:TLoginUser) => {
         throw new AppError(400,"user password not match!!")
     }
 
+    
     
     const jwtPayload = {
         email: user.email,
